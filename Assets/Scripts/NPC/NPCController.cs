@@ -6,6 +6,7 @@ public class NPCController : MonoBehaviour
 {
     public static NPCController Instance;
 
+    public StateMachine StateMachine;
     public uint GoldAmount;
 
     private void Awake()
@@ -14,4 +15,10 @@ public class NPCController : MonoBehaviour
             Instance = this;
         else Destroy(gameObject);
     }
+
+    private void Start()
+    {
+        StateMachine.RunStateMachine();
+    }
+
 }
