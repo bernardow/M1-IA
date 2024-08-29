@@ -1,18 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EscapingState : MonoBehaviour
+namespace NPC.StateMachine
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EscapingState : State
     {
+        private Vector3 enemyPosition;
         
-    }
+        public override IEnumerator Enter()
+        {
+            InUse = true;
+            yield return new WaitForSeconds(global::StateMachine.MAX_TIME_IN_STATE);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            StateMachine.ChangeState(NPCStates.IDLE);
+        }
+
+        public override IEnumerator Exit()
+        {
+            yield return null;
+            IsDone = false;
+            InUse = false;
+        }
+
+        private void MovePlayer()
+        {
+            Vector3 direction = (transform.position - enemyPosition).normalized;
+            transform.position += direction * 4 * Time.deltaTime;
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (!InUse) return;
+            
+            if (other.CompareTag("Enemy"))
+            {
+                enemyPosition = other.transform.position;
+                MovePlayer();
+            }
+        }
     }
 }

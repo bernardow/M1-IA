@@ -2,5 +2,6 @@
 {
     ATTACK,
     ESCAPING,
-    TREASURE
+    TREASURE,
+    IDLE
 }

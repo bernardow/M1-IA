@@ -6,8 +6,11 @@ public class NPCController : MonoBehaviour
 {
     public static NPCController Instance;
 
+    public float Life = 10;
+    public const float TotalLife = 10;
+    public float Damage = 4;
+    
     public StateMachine StateMachine;
-    public uint GoldAmount;
 
     private void Awake()
     {
